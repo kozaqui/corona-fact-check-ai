@@ -34,14 +34,14 @@ export class AppComponent {
   }
 
   onClick() {
-    // this.progress = 50;
-    console.log(this.model);
-    const data = '';
-    this.newsVerifyService.verify(data).subscribe(
+    this.newsVerifyService.verify(this.model.article).subscribe(
       (response: IValidation) => {
         this.validationModel = response;
+        console.log(response);
       },
-      (error) => {}
+      (error) => {
+        console.error(error);
+      }
     );
   }
 
