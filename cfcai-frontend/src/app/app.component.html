@@ -5,19 +5,26 @@
         <h3 class="masthead-brand">FakeCorona</h3>
         <nav class="nav nav-masthead justify-content-center">
           <a class="nav-link active" href="#">Home</a>
-          <a class="nav-link" href="#">Hackje</a>
+          <a class="nav-link" href="https://wtheory.io">Hackje</a>
           <a class="nav-link" href="#">Contact</a>
         </nav>
       </div>
     </header>
 
     <main role="main" class="inner cover">
-      <h1 class="cover-heading">KoronaWirusie</h1>
-      <p class="lead">Koronawirusie, chcesz dostać tu się. Lecz my się nie damy, bo się z domu nie ruszamy! #stayhome. lol</p>
+      <h1 class="cover-heading">Stop Fake News!</h1>
+      <p class="lead">Stop fake news as fakes are the virus of the internet!</p>
       <p class="lead">
         <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
       </p>
     </main>
+    <form name="verifyForm">
+      <div class="form-group">
+        <label for="articleSnippet">Article snippet</label>
+        <textarea [(ngModel)]="model.article" name="article" class="form-control" id="articleSnippet" rows="3" ></textarea>
+      </div>
+      <button (click)='onClick()' role="" class="btn btn-lg btn-primary">Verify</button>
+    </form>
 
     <footer class="mastfoot mt-auto">
       <div class="inner">
