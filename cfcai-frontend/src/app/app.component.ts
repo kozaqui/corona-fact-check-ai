@@ -20,6 +20,7 @@ export class AppComponent {
     article: ''
   };
 
+  public progress = 0;
   constructor(private newsVerifyService: NewsVerifyService) {
 
   }
