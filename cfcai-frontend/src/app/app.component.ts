@@ -1,5 +1,6 @@
 import { Component, Host, HostBinding } from '@angular/core';
 import { NewsVerifyService } from './news-verify.service';
+import { IValidation } from './IValidation.model';
 
 
 @Component({
@@ -20,17 +21,26 @@ export class AppComponent {
     article: ''
   };
 
-  public progress = 0;
+  public validationModel: IValidation = {
+    reliability: 0,
+    sources: [],
+    is_related: false,
+    original_text: '',
+    validated_text: 'xs'
+
+  };
   constructor(private newsVerifyService: NewsVerifyService) {
 
   }
 
   onClick() {
-    
+    // this.progress = 50;
     console.log(this.model);
     const data = '';
     this.newsVerifyService.verify(data).subscribe(
-      (response) => {},
+      (response: IValidation) => {
+        this.validationModel = response;
+      },
       (error) => {}
     );
   }
