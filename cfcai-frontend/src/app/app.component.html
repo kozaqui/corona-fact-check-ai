@@ -10,8 +10,24 @@
   </div>
 </header>
 
+<!-- <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> -->
+<header class="masthead mb-auto">
+  <div class="inner">
+    <h3 class="masthead-brand">Corona Fact Check AI</h3>
+    <nav class="nav nav-masthead justify-content-center">
+      <a class="nav-link active" href="#">Home</a>
+      <a class="nav-link" href="https://wtheory.io">Team</a>
+      <a class="nav-link"
+        href="https://www.guaana.com/challenge/SaxfAeTSiMWWAom6H/results/RzFjgXmEv7jipyeNT/TAdvnXbk7QaT4JTMJ/main">Project</a>
+      <a class="nav-link" href="https://www.hackcrisis.com/">HackCrisis</a>
+    </nav>
+  </div>
+</header>
+
 <main role="main" class="inner cover">
-  <h1 class="cover-heading">Stop Fake News!</h1>
+  <h1 class="cover-heading">Check your news</h1>
+  <p class="lead">Do you think that the news you're reading might not be accurate? Paste the content of your article in
+    the form below. We'll check if it showed up in one of the reliable sources of information.</p>
   <p class="lead">Stop fake news as fakes are the virus of the internet!</p>
   <p class="lead">
     <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
@@ -19,26 +35,26 @@
 </main>
 <form name="verifyForm">
   <div class="form-group">
-    <label for="articleSnippet">Article snippet</label>
-    <textarea [(ngModel)]="model.article" name="article" class="form-control" id="articleSnippet" rows="3"></textarea>
+    <label for="articleSnippet">Paste article text here</label>
+    <textarea [(ngModel)]="model.article" name="article" class="form-control" id="articleSnippet" rows="8"></textarea>
   </div>
   <button (click)='onClick()' role="" class="btn btn-lg btn-primary">Verify</button>
 </form>
 
 
-
-<div class="card mb-3" text-white bg-dark  >
+<div class="card mb-3" text-white bg-dark>
   <div class="row no-gutters">
     <div class="col-md-4">
       <circle-progress [percent]="progress" [radius]="50" [outerStrokeWidth]="10" [innerStrokeWidth]="10" [space]="-10"
-      [outerStrokeColor]="'#4882c2'" [innerStrokeColor]="'#e7e8ea'" [titleFontSize]="24" [unitsFontSize]="24"
-      [showSubtitle]="false" [animation]="true" [animationDuration]="300" [startFromZero]="false" [responsive]="true">
-    </circle-progress>
+        [outerStrokeColor]="'#4882c2'" [innerStrokeColor]="'#e7e8ea'" [titleFontSize]="24" [unitsFontSize]="24"
+        [showSubtitle]="false" [animation]="true" [animationDuration]="300" [startFromZero]="false" [responsive]="true">
+      </circle-progress>
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">Validation Result</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+          This content is a little bit longer.</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
@@ -47,6 +63,6 @@
 
 <footer class="mastfoot mt-auto">
   <div class="inner">
-    <p>Created with love, by <a href="https://wtheory.io">hackje</a>.</p>
+    <p>Made with love, by <a href="https://wtheory.io">hakje</a>.</p>
   </div>
 </footer>
