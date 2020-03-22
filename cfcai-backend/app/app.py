@@ -1,14 +1,18 @@
 from flask import Flask
 from flask_restful import reqparse
+from flask_cors import CORS, cross_origin
+
 
 parser = reqparse.RequestParser()
 parser.add_argument("text", type=str, help="Text to validate")
 
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/", methods=["POST"])
+@cross_origin()
 def validate():
 
     args = parser.parse_args()
