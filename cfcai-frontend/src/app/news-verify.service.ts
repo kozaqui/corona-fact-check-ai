@@ -9,7 +9,7 @@ import { Observable, of} from 'rxjs';
 })
 export class NewsVerifyService {
 
-  NEWS_VERIFY_ENDPOINT = 'http://34.89.220.76:5000';
+  NEWS_VERIFY_ENDPOINT = 'http://34.89.220.76';
 
   constructor(private httpClient: HttpClient) { }
 
