@@ -3,3 +3,5 @@ flask_restful
 gunicorn
 pandas
 gensim
+flask-cors
+gunicorn
