@@ -31,6 +31,4 @@ Currently the app is being deployed on Google Cloud with help of docker.
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the tags on this repository.
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
