@@ -16,25 +16,24 @@ export class NewsVerifyService {
   verify(data: string): Observable<IValidation> {
 
     let validation: IValidation;
-    if (data.trim() === 'Covid-19: disaster declared in New York as fears grow over lack of ventilators') {
+    if (data.trim().includes('Covid-19: disaster declared in New York as fears grow over lack of ventilators')) {
       validation = {
         is_related: true,
         original_text: 'Covid-19: disaster declared in New York as fears grow over lack of ventilators',
         reliability: 0.92,
         sources: [
-          'http://bbc.com',
+          'https://www.theguardian.com/us-news/2020/mar/21/coronavirus-new-york-disaster-ventilators',
         ],
         validated_text: 'Covid-19: disaster declared in New York as fears grow over lack of ventilators'
       };
 
-    } else if (data.trim() === `A bombshell study has revealed that coronavirus is a genetically engineered bioweapon developed at the Wuhan lab! It is not known how the virus got out to the general public.`) {
+    } else if (data.trim().includes(`A bombshell study has revealed that coronavirus is a genetically engineered bioweapon developed at the Wuhan lab! It is not known how the virus got out to the general public.`)) {
       validation = {
-        is_related: false,
-        original_text: `A bombshell study has revealed that coronavirus
-        is a genetically engineered bioweapon developed at the Wuhan lab! It is not known how the virus got out to the general public.`,
+        is_related: true,
+        original_text: `A bombshell study has revealed that coronavirus is a genetically engineered bioweapon developed at the Wuhan lab! It is not known how the virus got out to the general public.`,
         reliability: 0.17,
         sources: [
-          'http://yourdaylynews.com',
+          'https://www.express.co.uk/news/weird/1253135/coronavirus-genetically-engineered-bioweapon-wuhan-lab-leak-covid19-spt',
         ],
         validated_text: 'A bombshell study has revealed that coronavirus is a genetically engineered bioweapon developed at the Wuhan lab! It is not known how the virus got out to the general public.'
       };
