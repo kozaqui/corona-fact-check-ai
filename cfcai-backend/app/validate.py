@@ -25,23 +25,30 @@ def load_articles(dir='./'):
 
 def build_model(articles):
     texts = []
+    to_remove = []
     for url, art in articles.items():
         text = art['text']
         text = text.replace('\n', '')
         words = re.split(PUNCTUATION, text)
         text = [clean_word(w) for w in words if len(w) > 2]
-        texts.append(text)
+        if 'coronavirus' in text or 'covid' in text or 'covid-19' in text or 'virus' in text:
+            texts.append(text)
+        else:
+            to_remove.append(url)
+
+    for u in to_remove:
+        del articles[u]
 
     stop_words = ['http', 'https', 'unicef', 'nih', 'facebook', 'google', 'you', 'your', 'www', 'email', 'twitter']
     dictionary = corpora.Dictionary(texts)
-    dictionary.filter_extremes(no_below=10, no_above=0.2)
+    dictionary.filter_extremes(no_below=10, no_above=0.4)
     dictionary.filter_tokens(bad_ids=list(map(lambda w: dictionary.token2id[w],
                                               filter(lambda w: w in dictionary.token2id,
                                                      stop_words))))
 
     tfidf = models.TfidfModel(dictionary=dictionary, normalize=True)
     corpus = [tfidf[dictionary.doc2bow(text)] for text in texts]
-    lsi = models.LsiModel(corpus=corpus, id2word=dictionary, num_topics=100)
+    lsi = models.LsiModel(corpus=corpus, id2word=dictionary, num_topics=50)
     index = similarities.MatrixSimilarity(lsi[corpus])
     return {
         'articles': articles,
@@ -55,10 +62,10 @@ def build_model(articles):
 model = build_model(load_articles())
 
 
-def validate_text(query):
+def validate_text(query, threshold=0.5):
     query_text = re.split(PUNCTUATION, query)
     query_text = [clean_word(w) for w in query_text]
-    print(query_text)
+
     vec_bow = model['dictionary'].doc2bow(query_text)
     vec_lsi = model['lsi'][model['tfidf'][vec_bow]]  # convert the query to LSI space
     sims = model['index'][vec_lsi]
@@ -69,22 +76,25 @@ def validate_text(query):
     validated_text = ''
 
     for name in vv.sort_values(ascending=False).index[:10]:
-        urls.append(name)
-        url_similarities += vv.loc[name]
-        validated_text += name + '\n' + (model['articles'][name]['summary']) + '\n'
-
-    reliability = 0
-    n = 0
-    for s in url_similarities:
-        if s > 0.5:
-            reliability += s
-    reliability = reliability / n
-
+        rel = vv.loc[name]
+        if rel > threshold:
+            urls.append(name)
+            url_similarities.append(rel)
+            validated_text += name + '\n' + (model['articles'][name]['summary']) + '\n'
     result = {
-        "original_text": query_text,
-        "is_related": n > 3,
-        "reliability": reliability,
+        "original_text": query,
+        "is_related": len(url_similarities) > 0,
+        "reliability": sum(url_similarities[:3]) / len(url_similarities[:3]) if len(url_similarities) > 0 else 0,
         "sources": urls,
         "validated_text": validated_text,
     }
     return result
+
+
+if __name__ == '__main__':
+    import json
+    import sys
+
+    resp = validate_text(sys.argv[1])
+    with open(sys.argv[2], 'w') as f:
+        json.dump(resp, f, indent=4)
