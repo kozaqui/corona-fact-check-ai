@@ -27,16 +27,17 @@ export class AppComponent {
     is_related: false,
     original_text: '',
     validated_text: 'xs'
-
   };
+  private validationDefault = {...this.validationModel};
   constructor(private newsVerifyService: NewsVerifyService) {
 
   }
 
   onClick() {
+    this.validationModel = {...this.validationDefault};
     this.newsVerifyService.verify(this.model.article).subscribe(
       (response: IValidation) => {
-        this.validationModel = response;
+        setTimeout(() => {this.validationModel = {...response}}, 0 );
         console.log(response);
       },
       (error) => {
