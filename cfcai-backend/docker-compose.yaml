@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  backend:
+    build: .
+    ports: ['5000:5000']
+    env_file:
+      - ./.env.dev
+    volumes: ['.:/app']
+    command: /usr/local/bin/gunicorn -w 2 -t 3600 -b :5000 app:app --reload
