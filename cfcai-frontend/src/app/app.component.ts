@@ -17,6 +17,10 @@ export class AppComponent {
   @HostBinding('class.mx-auto') mxAuto = true;
   @HostBinding('class.flex-column') mxFlexColumn = true;
 
+  public reliableSourceExcerpt = 'Excerpt from the reliable source will appear here';
+  public urlPlaceholder = 'url of reliable content will appear here';
+  public url = '';
+
   public model = {
     article: ''
   };
@@ -34,14 +38,28 @@ export class AppComponent {
   }
 
   onClick() {
-    // this.progress = 50;
-    console.log(this.model);
-    const data = '';
-    this.newsVerifyService.verify(data).subscribe(
+    this.newsVerifyService.verify(this.model.article).subscribe(
       (response: IValidation) => {
         this.validationModel = response;
+        if (this.validationModel.is_related) {
+          if (this.validationModel.reliability > 0.3) {
+            this.reliableSourceExcerpt = this.validationModel.validated_text;
+          } else {
+            this.reliableSourceExcerpt = 'This is most probably a fake news! Check the related content';
+          }
+          this.url = this.validationModel.sources[0];
+          this.urlPlaceholder = this.url.substring(0, Math.min(this.url.length, 45)) + '...';
+        }
+        else {
+          this.url = '';
+          this.urlPlaceholder = 'no link';
+          this.reliableSourceExcerpt = `We couldn't recognize your article as related to Coronavirus`;
+        }
+        console.log(response);
       },
-      (error) => {}
+      (error) => {
+        console.error(error);
+      }
     );
   }
 
